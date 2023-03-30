@@ -1,24 +1,41 @@
 # CODEML_HYPHY_PIPELINE
 Scripts for generating alignments from orthogroups and running the branch-site test in codeml and RELAX in hyphy
 
-## MAKING ALIGNMENTS FROM ORTHOGROUPS
+The scripts are written in bash, python and R for a slurm based computing cluster like this one: https://documentation.sigma2.no/jobs/job_scripts/saga_job_scripts.html
 
-######################################################################################################################
-Requirements for this pipeline: 
+PART 1. MAKING ALIGNMENTS FROM ORTHOGROUPS
+####################################################################################
+I use the following programs for making gene alignments:
+EMBOSS (distmat algorithm)
 
-To make alignments with this pipeline, you first need to 1) have a set of cds and peptide files for the species you work with, and 2) run OrthoFinder with the peptide files from your species set (https://github.com/davidemms/OrthoFinder).    
+
+To make alignments with this set up, you first need to: 
+1) have a set of cds and peptide files for the species you work with, and 
+2) run OrthoFinder with the peptide files from your species set (https://github.com/davidemms/OrthoFinder).    
 
 SB: WRITE SOMETHING ABOUT FILE FORMATTING OF FASTAS: 
 
 Note: I have experienced that Guidance errors out on predicted genes from genome cds, so I have run such files through Transdecoder first. 
 
-######################################################################################################################
+####################################################################################
+Part 1a: Preparation of input files and running the distmat algorithm in EMBOSS: 
 
-##A: Preparation of input files and running the distmat algorithm in EMBOSS: 
+Introduction: First part of the pipeline involves calculating protein distance between all genes in an orthogroup using the distmat algorithm in EMBOSS. To do this we need to prepare the input files using three scripts: 1) The main script called "distmat_prep.sbatch" which needs the following python script: sort_gene_of_interest_v8.py starts the process of dividing the orthogroup fastas into orthogroup subsets - ultimately resulting in alignments with just one gene copy per species. The process is slightly complicated (and just an approximation), but it starts with defining a species of interest in our dataset (here "Poptre" for Populus tremula) and then dividing each orthogroup into subsets based on the gene copies of that species. For instance, the script will make three orthogroup subsets called OG0000334_Poptre_001.fasta OG0000334_Poptre_002.fasta and OG0000334_Poptre_003.fasta if there are three gene copies from "Poptre" in orthogroup OG0000334. To find which gene copies from the other species that have the smallest genetic distance to each of these gene copies, we place each gene copy together with the rest of the orthogroup sequences and calculate protein distance. (Note that the species of interest is always put last in the file to make file processing easier downstream).
 
-Introduction: First part of the pipeline involves calculating protein distance between all genes in an orthogroup using the distmat algorithm in EMBOSS. To do this we need to prepare the input files using three scripts: 1) The main script called "distmat_prep.sbatch" which needs two python scripts called 2) "MAFFTprep_allOrthogroup.py" and 3)"sort_gene_of_interest_v8.py". 
-	- The first python script called "MAFFTprep_allOrthogroups.py" uses a set of orthogroup index files (simple txt files that contain information on which genes that belong to an orthogroup) to collect the corresponding sequences from a concatenated fasta. It then alignes the orthogrops using MAFFT. The result is a set of aligned fastas - one for each orthogroup. 
-	- The second python script called "sort_gene_of_interest_v8.py" starts the process of dividing the orthogroup fastas into orthogroup subsets - ultimately resulting in alignments with just one gene copy per species. The process is slightly complicated (and just an approximation), but it starts with defining a species of interest in our dataset (here "Poptre" for Populus tremula) and then dividing each orthogroup into subsets based on the gene copies of that species. For instance, the script will make three orthogroup subsets called OG0000334_Poptre_001.fasta OG0000334_Poptre_002.fasta and OG0000334_Poptre_003.fasta if there are three gene copies from "Poptre" in orthogroup OG0000334. To find which gene copies from the other species that have the smallest genetic distance to each of these gene copies, we place each gene copy together with the rest of the orthogroup sequences and calculate protein distance. (Note that the species of interest is always put last in the file to make file processing easier downstream).
+## sort_gene_of_interest_v8.py ##
+This script starts the process of dividing the orthogroup fastas into 
+orthogroup subsets - ultimately resulting in alignments with just one gene copy 
+per species. The process is slightly complicated (and just an approximation), 
+but it starts with defining a species of interest in our dataset (here 
+"Poptre" for Populus tremula) and then dividing each orthogroup into subsets 
+based on the gene copies of that species. For instance, the script will make 
+three orthogroup subsets called OG0000334_Poptre_001.fasta 
+OG0000334_Poptre_002.fasta and OG0000334_Poptre_003.fasta if there are three 
+gene copies from "Poptre" in orthogroup OG0000334. To find which gene copies 
+from the other species that have the smallest genetic distance to each of these 
+gene copies, we place each gene copy together with the rest of the orthogroup 
+sequences and calculate protein distance. (Note that the species of interest 
+is always put last in the file to make file processing easier downstream).
 
 Starting ditstmat_prep.sbatch: 
 First we need to cocatenated the peptide fastas used by orthofinder and a set of files with gene identifiers made from the Orthogroups.tsv file, and then we run the three scripts "distmat_prep.sbatch", "MAFFTprep_allOrthogroups.py" and "sort_gene_of_interest_v8.py".  
