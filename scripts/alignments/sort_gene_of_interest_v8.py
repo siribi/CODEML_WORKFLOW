@@ -36,7 +36,7 @@ path = "/cluster/home/siribi/work/EVOTREE/CODEML/alignments/FABALES/orthofasta/"
 
 # B: Define pattern to search for
 
-pattern = r'Dalodo'
+pattern = r'Poptre'
 
 
 def get_gene_of_interest(path,fname,pattern):
