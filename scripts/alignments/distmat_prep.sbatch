@@ -25,7 +25,6 @@ set -o nounset # Treat unset variables as errors
 #purge and load modules
 module purge
 module load Python/2.7.15-intel-2018b
-#module load MAFFT/7.427-intel-2018b-with-extensions
 #
 #Listing modules for easier error-check
 module list
@@ -38,11 +37,7 @@ SCRIPTS=/cluster/home/siribi/evotree_project/ALIGNMENTS/
 
 ## Enter PARENT directory:
 cd $PARENT
-## Run the python scripts and mafft.
-##remember to modify paths and fasta names in the two python scripts. Target directory in MAFFTprep_allOrthogroups.py should be called "orthofasta".  
-#python $SCRIPTS/MAFFTprep_allOrthogroups.py
-cd orthofasta
-#$SCRIPTS/if_else_mafft.sh 
+##remember to modify paths and fasta names in the the python script.
 python $SCRIPTS/sort_gene_of_interest_v8.py 
 mkdir sorted_aligned
 cd sorted_aligned
