@@ -1,4 +1,4 @@
-# CODEML_HYPHY_PIPELINE
+# CODEML & HYPHY PIPELINE
 Scripts for generating single copy alignments from orthogroups, and then running the branch-site test in codeml or RELAX in hyphy 
 
 The approach for alignment generation and set-up for the branch-site test is described in Birkeland et al. 2020, Mol Biol Evol + Supplementary, with some minor changes  
@@ -36,7 +36,7 @@ My scripts do some sorting and filtering on the basis of such abbreviations.
 Scripts to edit fasta headers can be found in the fasta_prep directory.
 
 ####################################################################################
-Part 1a. Preparation of input files and running the distmat algorithm in EMBOSS. 
+**Part 1a. Preparation of input files and running the distmat algorithm in EMBOSS** 
 
 Introduction: First part of the pipeline involves calculating protein distance between all genes in an orthogroup using the distmat algorithm 
 in EMBOSS. To do this we need to prepare the input files using the scripts: The main script called "distmat_prep.sbatch" which needs 
@@ -71,7 +71,7 @@ NB: distmat_prep.sbatch will divide all *sorted.aligned files into directories w
 	sbatch --array=1-118 distance_worker.sbatch 
 
 #################################################################################### <br />
-Part 1b. Make files for GUIDANCE2
+**Part 1b. Make files for GUIDANCE2**
 
 Based on the results from the distmat algorithm from EMBOSS, next step is to build new files with only one gene copy for each species. The "make_files_for_guidance.sbatch" will run several helper scripts to process the output from distmat. Importantly it will pick out one gene copy per species based on the smalles genetic distance to the gene copies from the species of interest. Finally, it will assemble new single copy orthogroup fasta with all nucleotide sequences instead of protein sequences.
 
@@ -80,7 +80,7 @@ Based on the results from the distmat algorithm from EMBOSS, next step is to bui
 3. In GUIDANCE_prep.py Change A) "path", B) "paths", C) "fdna" and D) "pahti" (fnda is the concatenated cds file). This script assembles the nucleotide fasta files. 
 
 #################################################################################### <br />
-Part 1c. Run Guidance <br />
+**Part 1c. Run Guidance** <br />
 
 1. Copy new fasta files from single_copy_orthofasta to new directory. Divide into directories (50 files in each). Run make_50_directories.sh or execute this command: 
 
@@ -101,7 +101,7 @@ Part 1c. Run Guidance <br />
 	NB: See note about bug in GUIDANCE2 above
 
 #################################################################################### <br />
-Part 1d. Removing alignments with bad sequence scores
+**Part 1d. Removing alignments with bad sequence scores**
 
 Run detect_lower.py in the Seq_Scores_Guidance, to get a list (badseqscores.txt) of alignments containing sequences with scores less than 0.6. 
 Remember to load the right python module: 
@@ -125,7 +125,7 @@ Delete everything after : in Guidance_edit_files_with_Aalp.file
 
 # PART 2. RUNNING THE BRANCH-SITE TEST IN CODEML
 #################################################################################### <br />
-Part 2a. Preparing to run codeml
+**Part 2a. Preparing to run codeml**
 
 In directory where you want to run Codeml, copy over FASTAS_Guidance_Edits and the scripts directory of interest
 All the scripts directories should be ok now, but if needed it's easy to transform codeml_prep.sbatch for Cochlearia with a series of sed -i 's///g' commands!
@@ -135,7 +135,7 @@ The script codeml_prep.sbatch makes all necessary files and directories to run a
 To run the controls, you only need to change the tree file :)  
 
 #################################################################################### <br />
-Part 2b. Running codeml
+**Part 2b. Running the branch-site test in codeml**
 
 Run each model! 
 You need to cd into the model-run directory and change the worker and submit script. 
