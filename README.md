@@ -4,9 +4,10 @@ Scripts for generating alignments from orthogroups and running the branch-site t
 The scripts are written in bash, python and R for a slurm based computing cluster like this one: https://documentation.sigma2.no/jobs/job_scripts/saga_job_scripts.html
 
 PART 1. MAKING ALIGNMENTS FROM ORTHOGROUPS
-####################################################################################
-I use the following programs for making gene alignments:
-EMBOSS (distmat algorithm)
+#################################################################################### <br />
+
+I use the following programs for making gene alignments: <br />
+EMBOSS (distmat algorithm) <br />
 
 
 To make alignments with this set up, you first need to: 
