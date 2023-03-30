@@ -1,13 +1,13 @@
 # CODEML_HYPHY_PIPELINE
-Scripts for generating single copy alignments from orthogroups, and then running the branch-site test in codeml or RELAX in hyphy
+Scripts for generating single copy alignments from orthogroups, and then running the branch-site test in codeml or RELAX in hyphy 
 
-The approach for alignment generation and set-up for the branch-site test is described in Birkeland et al. 2020, Mol Biol Evol, with some minor changes  
+The approach for alignment generation and set-up for the branch-site test is described in Birkeland et al. 2020, Mol Biol Evol + Supplementary, with some minor changes  
 https://academic.oup.com/mbe/article/37/7/2052/5804990?login=false 
 
 The scripts are written in bash, python and R for a slurm based computing cluster like this one: https://documentation.sigma2.no/jobs/job_scripts/saga_job_scripts.html
 
-PARENT = path to your working directory
-SCRIPTS = path to the directory with the relevant scripts
+PARENT = path to your working directory <br />
+SCRIPTS = path to the directory with the relevant scripts <br />
 
 PART 1. MAKING ALIGNMENTS FROM ORTHOGROUPS
 #################################################################################### <br />
@@ -16,14 +16,16 @@ I use the following programs for making gene alignments: <br />
 ORTHOFINDER <br />
 EMBOSS (distmat algorithm) <br />
 GUIDANCE2 
+You will also need Python 2
 
-NOTE: I had problems with the MSA_parser.pm in GUIDANCE2 and contacted the developers regarding this. 
+NOTE ON GUIDANCE2: 
+I have experienced problems with the MSA_parser.pm in GUIDANCE2 and contacted the developers regarding this. 
 They sent me a new version, but I don't think it is implemented in the program yet (I had the exact same problem when I downloaded it years later). 
 With the new MSA_parser.pm, the final alignment file is called: MSA.PRANK.aln.Sorted.With_Names. 
 You can replace the file /cluster/home/siribi/nobackup/programs/guidance.v2.02/www/Guidance/../bioSequence_scripts_and_constants//MSA_parser.pm 
 with the MSA_parser.pm found in the GUIDANCE2_bugfix directory. There is no need for new compilation/installation. <br />
 
-You will also need Python 2
+GUIDANCE2 sometimes errors out on predicted genes from genome cds, so I have run such files through Transdecoder first.
 
 To make alignments with this set up, you first need to: 
 1) have a set of cds and peptide files for the species you work with, and 
@@ -32,8 +34,6 @@ To make alignments with this set up, you first need to:
 It can be smart to add a species abbreviation to all fasta entries, so that they can be searched and filtered on the basis of this name.
 My scripts do some sorting and filtering on the basis of such abbreviations. 
 Scripts to edit fasta headers can be found in the fasta_prep directory.
-
-NB: I have experienced that Guidance errors out on predicted genes from genome cds, so I have run such files through Transdecoder first. 
 
 ####################################################################################
 Part 1a: Preparation of input files and running the distmat algorithm in EMBOSS. 
