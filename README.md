@@ -1,5 +1,8 @@
 # CODEML_HYPHY_PIPELINE
-Scripts for generating alignments from orthogroups and then running the branch-site test in codeml or RELAX in hyphy
+Scripts for generating single copy alignments from orthogroups, and then running the branch-site test in codeml or RELAX in hyphy
+
+The approach for alignment generation and set-up for the branch-site test is described in Birkeland et al. 2020, Mol Biol Evol, with some minor changes  
+https://academic.oup.com/mbe/article/37/7/2052/5804990?login=false 
 
 The scripts are written in bash, python and R for a slurm based computing cluster like this one: https://documentation.sigma2.no/jobs/job_scripts/saga_job_scripts.html
 
@@ -12,7 +15,13 @@ PART 1. MAKING ALIGNMENTS FROM ORTHOGROUPS
 I use the following programs for making gene alignments: <br />
 ORTHOFINDER <br />
 EMBOSS (distmat algorithm) <br />
-GUIDANCE2 <br />
+GUIDANCE2 
+
+NOTE: I had problems with the MSA_parser.pm in GUIDANCE2 and contacted the developers regarding this. 
+They sent me a new version, but I don't think it is implemented in the program yet (I had the exact same problem when I downloaded it years later). 
+With the new MSA_parser.pm, the final alignment file is called: MSA.PRANK.aln.Sorted.With_Names. 
+You can replace the file /cluster/home/siribi/nobackup/programs/guidance.v2.02/www/Guidance/../bioSequence_scripts_and_constants//MSA_parser.pm 
+with the MSA_parser.pm found in the GUIDANCE2_bugfix directory. There is no need for new compilation/installation. <br />
 
 You will also need Python 2
 
@@ -90,7 +99,7 @@ Part 1c: Run Guidance <br />
 
 3. Run worker_guidance_fi.sbatch
 	Note: This run requires a lot of space. Consider running it in the work directory. 
-	NB: I had problems with the MSA_parser.pm in GUIDANCE2 and contacted the developers regarding this. They sent me a new version, but I don't think it is implemented in the program yet (I had the exact same problem when I downloaded it years later). With the new MSA_parser.pm, the final alignment file is called: MSA.PRANK.aln.Sorted.With_Names. 
+	NB: See note about bug in GUIDANCE2 above
 
 #################################################################################### <br />
 PART 2: RUNNING CODEML
@@ -108,22 +117,22 @@ cat badseqscores.txt | xargs mv -t badseqscores/
 #Use this file for the next steps (Remember to remove e.g. > with  sed -i 's/>//g')
 #Grepping for files with gaps and stop-codons and feeding them into a file:
 grep -f Aalp_sequences_with_gaps_EDIT2.file *.fasta >> Guidance_edit_files_with_Aalp.file
-# Delete everything after : in Guidance_edit_files_with_Aalp.file
+Delete everything after : in Guidance_edit_files_with_Aalp.file
 sed 's/:.*//g' Guidance_edit_files_with_Aalp.file >> List_of_files_with_Aalp_gaps.file
 cat List_of_files_with_Aalp_gaps.file | xargs mv -t Aalp_GAPS/
 
-### In directory where you want to run Codeml, copy over FASTAS_Guidance_Edits and the scripts directory of interest
-### All the scripts directories should be ok now, but if needed it's easy to transform codeml_prep.sbatch for Cochlearia with a series of sed -i 's///g' commands!
-#e.g. sed -i 's/Bulk_run_Draba.tree/Bulk_run_Cochlearia.tree/g' codeml_prep_Cochlearia.sbatch
-### Remember to change PARENT and SCRIPTS directories in codeml_prep.sbatch
-### The script codeml_prep.sbatch makes all necessary files and directories to run all models of CODEML.
-### To run the controls, you only need to change the tree file :)  
+In directory where you want to run Codeml, copy over FASTAS_Guidance_Edits and the scripts directory of interest
+All the scripts directories should be ok now, but if needed it's easy to transform codeml_prep.sbatch for Cochlearia with a series of sed -i 's///g' commands!
+e.g. sed -i 's/Bulk_run_Draba.tree/Bulk_run_Cochlearia.tree/g' codeml_prep_Cochlearia.sbatch
+Remember to change PARENT and SCRIPTS directories in codeml_prep.sbatch
+The script codeml_prep.sbatch makes all necessary files and directories to run all models of CODEML.
+To run the controls, you only need to change the tree file :)  
 
 ######################################################################################################################
 
 Part 2b: Running codeml
 
-###Run each model! 
-###You need to cd into the model-run directory and change the worker and submit script. 
-#In the worker script copy the path of the mlc-output directory (one directory up), and insert the path to the model directory (where you have all the directories).
-#In the submit script you need to change the number of directories. 
+Run each model! 
+You need to cd into the model-run directory and change the worker and submit script. 
+In the worker script copy the path of the mlc-output directory (one directory up), and insert the path to the model directory (where you have all the directories).
+In the submit script you need to change the number of directories. 
