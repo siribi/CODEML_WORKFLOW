@@ -14,12 +14,14 @@ ORTHOFINDER <br />
 EMBOSS (distmat algorithm) <br />
 GUIDANCE2 <br />
 
+You will also need Python 2
+
 To make alignments with this set up, you first need to: 
 1) have a set of cds and peptide files for the species you work with, and 
-2) run OrthoFinder with the peptide files from your species set (https://github.com/davidemms/OrthoFinder).    
+2) run OrthoFinder with the peptide files from your species set. Remember to include the multiple sequence alignment option (https://github.com/davidemms/OrthoFinder).    
 
-It can be smart to add a species abbreviation to all fasta entries, so that they can be searched and filtered using this abbreviation.
-My scripts to some sorting and filtering on the basis of such species abbreviations. 
+It can be smart to add a species abbreviation to all fasta entries, so that they can be searched and filtered on the basis of this name.
+My scripts do some sorting and filtering on the basis of such abbreviations. 
 Scripts to edit fasta headers can be found in the fasta_prep directory.
 
 NB: I have experienced that Guidance errors out on predicted genes from genome cds, so I have run such files through Transdecoder first. 
@@ -28,8 +30,8 @@ NB: I have experienced that Guidance errors out on predicted genes from genome c
 Part 1a: Preparation of input files and running the distmat algorithm in EMBOSS. 
 
 Introduction: First part of the pipeline involves calculating protein distance between all genes in an orthogroup using the distmat algorithm 
-in EMBOSS. To do this we need to prepare the input files using two scripts: The main script called "distmat_prep.sbatch" which needs 
-the accessory python script: sort_gene_of_interest_v8.py 
+in EMBOSS. To do this we need to prepare the input files using the scripts: The main script called "distmat_prep.sbatch" which needs 
+the two accessory scripts: sort_gene_of_interest_v8.py and make_directories.sh
 
 BEFORE starting ditstmat_prep.sbatch
 1. Copy all alignments from the MultipleSequenceAlignments in the OrthoFinder results directory to a directory called e.g. orthofasta in the PARENT directory
@@ -54,7 +56,7 @@ BEFORE starting ditstmat_prep.sbatch
 
 NB: distmat_prep.sbatch will divide all *sorted.aligned files into directories with 100 in each using "make_directories.sh". However, it differs from system to system how you should number these directories. The script gives each directory the name dir.1, dir.2, dir.3 etc., but some systems only reads dir.001, dir.002, dir.003)
 
-4. After the distmat_prep.sbatch is finished, we are ready to do an array run of distmat! 
+4. After the distmat_prep.sbatch is finished, we are ready to do an array run of distmat! distance_worker.sbatch is copied to the relevant directory.
 	Change $DISTMAT_OUT in the worker script called "distance_worker.sbatch" (i.e. the distmat directory)
 	submit an array run of "distance_worker.sbatch" (Differs from system to system, so you might have to figure out how these work on your cluster. Some need both a submit and worker script, while some only use a worker script. On my current cluster I use the following command for e.g. 118 dir.*: 
 	sbatch --array=1-118 distance_worker.sbatch 
