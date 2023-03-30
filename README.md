@@ -102,24 +102,31 @@ Part 1c: Run Guidance <br />
 	NB: See note about bug in GUIDANCE2 above
 
 #################################################################################### <br />
-PART 2: RUNNING CODEML
+Part 1d. Removing alignments with bad sequence scores
 
-Part 2a: Prepping for the branch-site test in codeml after a guidance run: 
-
-Run detect_lower.py in the Seq_Scores_Guidance, to get a list (badseqscores.txt) of alignments containing sequences with scores less than 0.6. #module load python2/2.7.10.gnu (Abel) or Python/2.7.15-fosscuda-2018b (Saga)
-#adding file extentions to badseqscores.txt
+Run detect_lower.py in the Seq_Scores_Guidance, to get a list (badseqscores.txt) of alignments containing sequences with scores less than 0.6. 
+Remember to load the right python module: 
+	module load python2/2.7.10.gnu (Abel) 
+	module load Python/2.7.15-fosscuda-2018b (Saga)
+adding file extentions to badseqscores.txt
 	sed -i 's/$/\.guidance.edit.fasta/' ./badseqscores.txt 
-#In directory with FASTAS_Guidance_Edits, move list of bad seq scores to new directory
-cat badseqscores.txt | xargs mv -t badseqscores/
+In directory with FASTAS_Guidance_Edits, move list of bad seq scores to new directory
+	cat badseqscores.txt | xargs mv -t badseqscores/
 
-### If needed, remove alignment containing gaps and internal stop codons (this should actually be done beforehand though...)
-#Here I made a list of sequences in Arabis alpina and Cardamine hirsuta that contained Ns (and also one for internal STOP codons)
-#Use this file for the next steps (Remember to remove e.g. > with  sed -i 's/>//g')
-#Grepping for files with gaps and stop-codons and feeding them into a file:
-grep -f Aalp_sequences_with_gaps_EDIT2.file *.fasta >> Guidance_edit_files_with_Aalp.file
+If needed, remove alignment containing gaps and internal stop codons (this should actually be done beforehand though...)
+Here I made a list of sequences in Arabis alpina and Cardamine hirsuta that contained Ns (and also one for internal STOP codons)
+Use this file for the next steps (Remember to remove e.g. > with  sed -i 's/>//g')
+Grepping for files with gaps and stop-codons and feeding them into a file:
+	grep -f Aalp_sequences_with_gaps_EDIT2.file *.fasta >> Guidance_edit_files_with_Aalp.file
 Delete everything after : in Guidance_edit_files_with_Aalp.file
-sed 's/:.*//g' Guidance_edit_files_with_Aalp.file >> List_of_files_with_Aalp_gaps.file
-cat List_of_files_with_Aalp_gaps.file | xargs mv -t Aalp_GAPS/
+	sed 's/:.*//g' Guidance_edit_files_with_Aalp.file >> List_of_files_with_Aalp_gaps.file
+	cat List_of_files_with_Aalp_gaps.file | xargs mv -t Aalp_GAPS/
+
+
+
+PART 2. RUNNING THE BRANCH-SITE TEST IN CODEML
+######################################################################################################################
+Part 2a. Preparing to run codeml
 
 In directory where you want to run Codeml, copy over FASTAS_Guidance_Edits and the scripts directory of interest
 All the scripts directories should be ok now, but if needed it's easy to transform codeml_prep.sbatch for Cochlearia with a series of sed -i 's///g' commands!
@@ -129,8 +136,7 @@ The script codeml_prep.sbatch makes all necessary files and directories to run a
 To run the controls, you only need to change the tree file :)  
 
 ######################################################################################################################
-
-Part 2b: Running codeml
+Part 2b. Running codeml
 
 Run each model! 
 You need to cd into the model-run directory and change the worker and submit script. 
