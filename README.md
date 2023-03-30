@@ -15,7 +15,7 @@ PART 1. MAKING ALIGNMENTS FROM ORTHOGROUPS
 I use the following programs for making gene alignments: <br />
 ORTHOFINDER <br />
 EMBOSS (distmat algorithm) <br />
-GUIDANCE2 
+GUIDANCE2  <br />
 You will also need Python 2
 
 NOTE ON GUIDANCE2: 
