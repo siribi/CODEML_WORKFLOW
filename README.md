@@ -9,9 +9,6 @@ https://academic.oup.com/mbe/article/37/7/2052/5804990?login=false
 
 The scripts are written in bash, python and R for a slurm based computing cluster like this one: https://documentation.sigma2.no/jobs/job_scripts/saga_job_scripts.html
 
-PARENT = path to your working directory <br />
-SCRIPTS = path to the directory with the relevant scripts <br />
-
 # PART 1. MAKING ALIGNMENTS FROM ORTHOGROUPS
 #################################################################################### <br />
 
@@ -40,6 +37,10 @@ Formatting of fastas:
 It can be smart to add a species abbreviation to all fasta entries, so that they can be searched and filtered on the basis of this name.
 My scripts do some sorting and filtering on the basis of such abbreviations. 
 Scripts to edit fasta headers can be found in the fasta_prep directory.
+
+In the scripts I use the following terminology: <br />
+PARENT = path to your working directory <br />
+SCRIPTS = path to the directory with the relevant scripts <br />
 
 ####################################################################################
 **Part 1a. Preparation of input files and running the distmat algorithm in EMBOSS** 
