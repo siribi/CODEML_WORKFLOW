@@ -5,7 +5,7 @@ The scripts were made for study systems that have very few single-copy orthogrou
 The approach for alignment generation and set-up for the branch-site test is described in Birkeland et al. 2020, Mol Biol Evol + Supplementary, with some minor changes  
 https://academic.oup.com/mbe/article/37/7/2052/5804990?login=false
 
-[embed]https://github.com/siribi/CODEML_HYPHY_PIPELINE/blob/main/images/Birkeland_et_al_2020_MBE_PipelineChart.pdf[/embed]
+![Pipelinechart from Birkeland et al. 2020](https://github.com/siribi/CODEML_HYPHY_PIPELINE/blob/main/images/FigureS2_Pipeline_chart.png)
 
 The scripts are written in bash, python and R for a slurm based computing cluster like this one: https://documentation.sigma2.no/jobs/job_scripts/saga_job_scripts.html
 
