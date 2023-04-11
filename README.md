@@ -1,6 +1,6 @@
-# CODEML & HYPHY PIPELINE
-This repository contains scripts for generating single copy alignments from orthogroups, and running the branch-site test in codeml or RELAX in hyphy. 
-The scripts were made for study systems that have very few single-copy orthogroups (not uncommon in plants), and orthogroups that contain multiple gene copies/transcripts per species are divided into subsets based on smallest genetic distance (an approximation). 
+# ALIGNMENT GENERATION & CODEML PIPELINE
+This repository contains scripts for generating single copy alignments from orthogroups, and running the branch-site test in codeml. 
+The scripts were made for study systems that have very few single-copy orthogroups (not uncommon in plants). To generate enough single-copy alignments,  orthogroups that contain multiple gene copies/transcripts per species are divided into subsets based on smallest genetic distance (an approximation). 
 
 The approach for alignment generation and set-up for the branch-site test (2a in the Figure below) is described in Birkeland et al. 2020, Mol Biol Evol + Supplementary, with some minor changes  
 https://academic.oup.com/mbe/article/37/7/2052/5804990?login=false
@@ -33,7 +33,7 @@ To make alignments with this set up, you first need to:
 2) run OrthoFinder with the peptide files from your species set. Remember to include the multiple sequence alignment option (https://github.com/davidemms/OrthoFinder).    
 NB: Note that GUIDANCE2, codeml and RELAX may be sensitive to gene sequences that are not complete or weirdly formatted (e.g., they are lacking start codons, contain internal stop codons etc). This is an issue that may apply to some non-model genomes. 
 
-Formatting of fastas:
+Formatting of fastas: <br />
 It can be smart to add a species abbreviation to all fasta entries, so that they can be searched and filtered on the basis of this name.
 My scripts do some sorting and filtering on the basis of such abbreviations. 
 Scripts to edit fasta headers can be found in the fasta_prep directory.
