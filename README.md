@@ -1,5 +1,6 @@
 # CODEML & HYPHY PIPELINE
-Scripts for generating single copy alignments from orthogroups, and then running the branch-site test in codeml or RELAX in hyphy 
+This repository contains scripts for generating single copy alignments from orthogroups, and then running the branch-site test in codeml or RELAX in hyphy. 
+The scripts were made for study systems were there are very few single-copy orthogroups (not uncommon in plants), and orthogroups that contain multiple gene copies/transcripts per species are divided into subsets based on smallest genetic distance (an approximation). 
 
 The approach for alignment generation and set-up for the branch-site test is described in Birkeland et al. 2020, Mol Biol Evol + Supplementary, with some minor changes  
 https://academic.oup.com/mbe/article/37/7/2052/5804990?login=false 
@@ -16,7 +17,7 @@ I use the following programs for making gene alignments: <br />
 ORTHOFINDER <br />
 EMBOSS (distmat algorithm) <br />
 GUIDANCE2  <br />
-You will also need Python 2
+You will also need Python 2 (I have not updated the scripts to newer Python versions)
 
 NOTE ON GUIDANCE2: 
 I have experienced problems with the MSA_parser.pm in GUIDANCE2 and contacted the developers regarding this. 
@@ -81,6 +82,9 @@ Based on the results from the distmat algorithm from EMBOSS, next step is to bui
 
 #################################################################################### <br />
 **Part 1c. Run Guidance** <br />
+Previous studies have shown that a phylogeny aware aligner such as PRANK in combination with alignment filtering with GUIDANCE improves positive selection inference on simulated data (Jordan and Goldman 2012; Privman et al. 2012). 
+With the help of GUIDANCE2, all alignments with a sequence score <0.6, as well as all columns scoring <0.93 (default), are removed from the data set. 
+I have chosen to remove the entire alignment if one of the sequences fall below 0.6 just for simplicity/smoother running of CODEML (this happens in the next step - 1d).
 
 1. Copy new fasta files from single_copy_orthofasta to new directory. Divide into directories (50 files in each). Run make_50_directories.sh or execute this command: 
 
@@ -97,8 +101,9 @@ Based on the results from the distmat algorithm from EMBOSS, next step is to bui
 	mkdir FASTAS_Guidance_Edits MSA_Scores_Guidance Seq_Scores_Guidance
 
 3. Run worker_guidance_fi.sbatch
-	Note: This run requires a lot of space. Consider running it in the work directory. 
-	NB: See note about bug in GUIDANCE2 above
+	Note 1: This run requires a lot of space. Consider running it in the work directory. 
+	Note 2: Notice that the main output of GUIDANCE2 gets this name: mv MSA.PRANK.Without_low_SP_Col.With_Names $FILEBASE.guidance.edit.fasta
+	Note 3: See note about bug in GUIDANCE2 above
 
 #################################################################################### <br />
 **Part 1d. Removing alignments with bad sequence scores**
