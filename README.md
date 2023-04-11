@@ -1,6 +1,6 @@
 # CODEML & HYPHY PIPELINE
 This repository contains scripts for generating single copy alignments from orthogroups, and then running the branch-site test in codeml or RELAX in hyphy. 
-The scripts were made for study systems were there are very few single-copy orthogroups (not uncommon in plants), and orthogroups that contain multiple gene copies/transcripts per species are divided into subsets based on smallest genetic distance (an approximation). 
+The scripts were made for study systems that have very few single-copy orthogroups (not uncommon in plants), and orthogroups that contain multiple gene copies/transcripts per species are divided into subsets based on smallest genetic distance (an approximation). 
 
 The approach for alignment generation and set-up for the branch-site test is described in Birkeland et al. 2020, Mol Biol Evol + Supplementary, with some minor changes  
 https://academic.oup.com/mbe/article/37/7/2052/5804990?login=false 
@@ -17,21 +17,24 @@ I use the following programs for making gene alignments: <br />
 ORTHOFINDER <br />
 EMBOSS (distmat algorithm) <br />
 GUIDANCE2  <br />
+PRANK <br />
 You will also need Python 2 (I have not updated the scripts to newer Python versions)
 
 NOTE ON GUIDANCE2: 
-I have experienced problems with the MSA_parser.pm in GUIDANCE2 and contacted the developers regarding this. 
-They sent me a new version, but I don't think it is implemented in the program yet (I had the exact same problem when I downloaded it years later). 
+- GUIDANCE2 does not seem to have been updated since 2016: http://guidance.tau.ac.il/source 
+- I have experienced problems with the MSA_parser.pm in GUIDANCE2 and contacted the developers regarding this. 
+They sent me a new version, but I don't think it is implemented in the program (I had the exact same problem when I downloaded it years later). 
 With the new MSA_parser.pm, the final alignment file is called: MSA.PRANK.aln.Sorted.With_Names. 
 You can replace the file /cluster/home/siribi/nobackup/programs/guidance.v2.02/www/Guidance/../bioSequence_scripts_and_constants//MSA_parser.pm 
 with the MSA_parser.pm found in the GUIDANCE2_bugfix directory. There is no need for new compilation/installation. <br />
-
-GUIDANCE2 sometimes errors out on predicted genes from genome cds, so I have run such files through Transdecoder first.
+- GUIDANCE2 sometimes errors out on predicted genes from genome cds, so I have run such files through Transdecoder first.
 
 To make alignments with this set up, you first need to: 
 1) have a set of cds and peptide files for the species you work with, and 
 2) run OrthoFinder with the peptide files from your species set. Remember to include the multiple sequence alignment option (https://github.com/davidemms/OrthoFinder).    
+NB: Note that GUIDANCE2, codeml and RELAX may be sensitive to gene sequences that are not complete or weirdly formatted (e.g., they are lacking start codons, contains internal stop codons etc). I have for instance chosen to remove sequences containing gaps and internal stop codons. This is an issue that may apply to some non-model genomes. 
 
+Formatting of fastas:
 It can be smart to add a species abbreviation to all fasta entries, so that they can be searched and filtered on the basis of this name.
 My scripts do some sorting and filtering on the basis of such abbreviations. 
 Scripts to edit fasta headers can be found in the fasta_prep directory.
@@ -117,7 +120,7 @@ adding file extentions to badseqscores.txt
 In directory with FASTAS_Guidance_Edits, move list of bad seq scores to new directory
 	cat badseqscores.txt | xargs mv -t badseqscores/
 
-If needed, remove alignment containing gaps and internal stop codons (this should actually be done beforehand though...)
+If needed, remove alignments containing gaps and internal stop codons (this should actually be done beforehand though...)
 Here I made a list of sequences in Arabis alpina and Cardamine hirsuta that contained Ns (and also one for internal STOP codons)
 Use this file for the next steps (Remember to remove e.g. > with  sed -i 's/>//g')
 Grepping for files with gaps and stop-codons and feeding them into a file:
