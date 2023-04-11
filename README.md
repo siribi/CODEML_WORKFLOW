@@ -1,9 +1,10 @@
 # CODEML & HYPHY PIPELINE
-This repository contains scripts for generating single copy alignments from orthogroups, and then running the branch-site test in codeml or RELAX in hyphy. 
+This repository contains scripts for generating single copy alignments from orthogroups, and running the branch-site test in codeml or RELAX in hyphy. 
 The scripts were made for study systems that have very few single-copy orthogroups (not uncommon in plants), and orthogroups that contain multiple gene copies/transcripts per species are divided into subsets based on smallest genetic distance (an approximation). 
 
 The approach for alignment generation and set-up for the branch-site test is described in Birkeland et al. 2020, Mol Biol Evol + Supplementary, with some minor changes  
-https://academic.oup.com/mbe/article/37/7/2052/5804990?login=false 
+https://academic.oup.com/mbe/article/37/7/2052/5804990?login=false
+[embed]image/FigureS2_Pipeline_chart.png[/embed]
 
 The scripts are written in bash, python and R for a slurm based computing cluster like this one: https://documentation.sigma2.no/jobs/job_scripts/saga_job_scripts.html
 
@@ -32,7 +33,7 @@ with the MSA_parser.pm found in the GUIDANCE2_bugfix directory. There is no need
 To make alignments with this set up, you first need to: 
 1) have a set of cds and peptide files for the species you work with, and 
 2) run OrthoFinder with the peptide files from your species set. Remember to include the multiple sequence alignment option (https://github.com/davidemms/OrthoFinder).    
-NB: Note that GUIDANCE2, codeml and RELAX may be sensitive to gene sequences that are not complete or weirdly formatted (e.g., they are lacking start codons, contains internal stop codons etc). I have for instance chosen to remove sequences containing gaps and internal stop codons. This is an issue that may apply to some non-model genomes. 
+NB: Note that GUIDANCE2, codeml and RELAX may be sensitive to gene sequences that are not complete or weirdly formatted (e.g., they are lacking start codons, contain internal stop codons etc). This is an issue that may apply to some non-model genomes. 
 
 Formatting of fastas:
 It can be smart to add a species abbreviation to all fasta entries, so that they can be searched and filtered on the basis of this name.
