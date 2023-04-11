@@ -2,7 +2,7 @@
 This repository contains scripts for generating single copy alignments from orthogroups, and running the branch-site test in codeml or RELAX in hyphy. 
 The scripts were made for study systems that have very few single-copy orthogroups (not uncommon in plants), and orthogroups that contain multiple gene copies/transcripts per species are divided into subsets based on smallest genetic distance (an approximation). 
 
-The approach for alignment generation and set-up for the branch-site test is described in Birkeland et al. 2020, Mol Biol Evol + Supplementary, with some minor changes  
+The approach for alignment generation and set-up for the branch-site test (2a in the Figure below) is described in Birkeland et al. 2020, Mol Biol Evol + Supplementary, with some minor changes  
 https://academic.oup.com/mbe/article/37/7/2052/5804990?login=false
 
 ![Pipelinechart from Birkeland et al. 2020](https://github.com/siribi/CODEML_HYPHY_PIPELINE/blob/main/images/FigureS2_Pipeline_chart.png)
