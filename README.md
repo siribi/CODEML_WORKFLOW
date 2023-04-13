@@ -29,19 +29,16 @@ You can replace the file
 ```
 /cluster/home/siribi/nobackup/programs/guidance.v2.02/www/Guidance/../bioSequence_scripts_and_constants/MSA_parser.pm 
 ```
-with the MSA_parser.pm found in the GUIDANCE2_bugfix directory. There is no need for new compilation/installation. <br />
-- GUIDANCE2 sometimes errors out on predicted genes from genome cds, so I have run such files through Transdecoder first.
+with the MSA_parser.pm found in the [GUIDANCE2_bugfix directory](https://github.com/siribi/CODEML_WORKFLOW/tree/main/GUIDANCE2_bugfix). There is no need for new compilation/installation. <br />
 
 To make alignments with this set up, you first need to: 
 1) have a set of cds and peptide files for the species you work with, and 
 2) run OrthoFinder with the peptide files from your species set. You have the possibility to do multiple sequence alignment with MAFFT within Orthofinder, or you could use the files in "Orthogroup_Sequences" and align them with MAFFT afterwards.     
 
-NB: Note that this workflow may be sensitive to gene sequences that are not complete or weirdly formatted (e.g., they are lacking start codons, contain internal stop codons or are not in frame). It can be a good idea to do a sanity check first, especially with some new non-model genomes. 
+NB: Note that this workflow may be sensitive to gene sequences that are not complete or weirdly formatted (e.g., they are lacking start codons, contain internal stop codons or are not in frame). It can be a good idea to do a sanity check first, especially with some new non-model genomes. In certain cases I had to run cds files through Transdecoder first.
 
 Formatting of fastas: <br />
-It can be smart to add a species abbreviation to all fasta entries, so that they can be searched and filtered on the basis of this name.
-My scripts do some sorting and filtering on the basis of such abbreviations. 
-Scripts to edit fasta headers can be found in the fasta_prep directory.
+It can be smart to add a species abbreviation to all fasta entries, so that they can be searched and filtered on the basis of this name. My scripts do some sorting and filtering on the basis of such species abbreviations. Scripts to edit fasta headers can be found in the [fasta_prep directory](https://github.com/siribi/CODEML_WORKFLOW/tree/main/scripts).
 
 In the scripts I use the following terminology: <br />
 PARENT = path to your working directory <br />
