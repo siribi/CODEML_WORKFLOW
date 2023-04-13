@@ -122,12 +122,12 @@ mkdir FASTAS_Guidance_Edits MSA_Scores_Guidance Seq_Scores_Guidance
 ```
 
 3. Run worker_guidance_fi.sbatch
-	Note i: This run requires a lot of space. Consider running it in the work directory.  <br />
-	Note ii: Notice that the main output of GUIDANCE2 is renamed: 
+- Note i: This run requires a lot of space. Consider running it in the work directory.  <br />
+- Note ii: Notice that the main output of GUIDANCE2 is renamed: 
 ```
 mv MSA.PRANK.Without_low_SP_Col.With_Names $FILEBASE.guidance.edit.fasta
 ```
-	Note iii: See note about bug in GUIDANCE2 above <br />
+- Note iii: See note about bug in GUIDANCE2 above <br />
 
 #################################################################################### <br />
 **Part 1d. Removing alignments with bad sequence scores**
