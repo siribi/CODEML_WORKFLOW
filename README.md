@@ -52,7 +52,7 @@ in EMBOSS. To do this we need to prepare the input files using the scripts: The 
 the three accessory scripts: 1) if_else_mafft.sh (optional), 2) sort_gene_of_interest_v8.py, and 3) make_directories.sh
 
 BEFORE starting ditstmat_prep.sbatch
-1. Either i) copy all alignments from the MultipleSequenceAlignments directory in the OrthoFinder to a directory called "orthofasta" in the PARENT directory, or copy unaligned sequences from "Orthogroup_Sequences" to a directory called "orthofasta". If you already have aligned sequences you can hashtag out the run of if_else_mafft.sh (protein alignment) in distmat_prep.sbatch.
+1. Either i) copy unaligned sequences from "Orthogroup_Sequences" to a directory called "orthofasta" for alignment with MAFFT, or ii) copy all alignments from the MultipleSequenceAlignments directory in OrthoFinder to a directory called "orthofasta" in the PARENT directory. If you already have aligned sequences you can hashtag out the run of if_else_mafft.sh (protein alignment) in distmat_prep.sbatch.
 2. Change A) "path" and B) "pattern" in sort_gene_of_interest_v8.py (explanation of "path" nad "pattern" in the file)
 	This script starts the process of dividing the orthogroup fastas into 
 	orthogroup subsets - ultimately resulting in alignments with just one gene copy 
