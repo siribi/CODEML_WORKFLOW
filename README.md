@@ -38,13 +38,13 @@ To make alignments with this set up, you first need to:
 NB: Note that this workflow may be sensitive to gene sequences that are not complete or weirdly formatted (e.g., they are lacking start codons, contain internal stop codons or are not in frame). It can be a good idea to do a sanity check first, especially with some new non-model genomes. In certain cases I had to run cds files through Transdecoder first.
 
 Formatting of fastas: <br />
-It can be smart to add a species abbreviation to all fasta entries, so that they can be searched and filtered on the basis of this name. My scripts do some sorting and filtering on the basis of such species abbreviations. Scripts to edit fasta headers can be found in the [fasta_prep directory](https://github.com/siribi/CODEML_WORKFLOW/tree/main/scripts).
+It can be smart to add a species abbreviation to all fasta entries, so that they can be searched and filtered on the basis of this name. My scripts do some sorting and filtering on the basis of such species abbreviations. Scripts to edit fasta headers can be found in the [fasta_prep directory](https://github.com/siribi/CODEML_WORKFLOW/tree/main/scripts/fasta_prep).
 
 In the scripts I use the following terminology: <br />
 PARENT = path to your working directory <br />
 SCRIPTS = path to the directory with the relevant scripts <br />
 
-####################################################################################
+#################################################################################### <br />
 **Part 1a. Preparation of input files and running the distmat algorithm in EMBOSS** 
 
 Introduction: First part of the pipeline involves calculating protein distance between all genes in an orthogroup using the distmat algorithm 
@@ -122,9 +122,12 @@ mkdir FASTAS_Guidance_Edits MSA_Scores_Guidance Seq_Scores_Guidance
 ```
 
 3. Run worker_guidance_fi.sbatch
-	Note 1: This run requires a lot of space. Consider running it in the work directory. 
-	Note 2: Notice that the main output of GUIDANCE2 gets this name: mv MSA.PRANK.Without_low_SP_Col.With_Names $FILEBASE.guidance.edit.fasta
-	Note 3: See note about bug in GUIDANCE2 above
+	Note i: This run requires a lot of space. Consider running it in the work directory.  <br />
+	Note ii: Notice that the main output of GUIDANCE2 is renamed: 
+```
+mv MSA.PRANK.Without_low_SP_Col.With_Names $FILEBASE.guidance.edit.fasta
+```
+	Note iii: See note about bug in GUIDANCE2 above <br />
 
 #################################################################################### <br />
 **Part 1d. Removing alignments with bad sequence scores**
