@@ -13,7 +13,7 @@ The scripts are written in bash, python and R for a slurm based computing cluste
 #################################################################################### <br />
 
 I use the following programs for making gene alignments: <br />
-ORTHOFINDER <br />
+[ORTHOFINDER](https://github.com/davidemms/OrthoFinder) <br />
 MAFFT <br />
 EMBOSS (distmat algorithm) <br />
 GUIDANCE2  <br />
@@ -31,7 +31,7 @@ with the MSA_parser.pm found in the GUIDANCE2_bugfix directory. There is no need
 
 To make alignments with this set up, you first need to: 
 1) have a set of cds and peptide files for the species you work with, and 
-2) run OrthoFinder with the peptide files from your species set (https://github.com/davidemms/OrthoFinder). You have the possibility to do multiple sequence alignment with MAFFT within Orthofinder, or you could use the files in "Orthogroup_Sequences" and align them with MAFFT afterwards.     
+2) run OrthoFinder with the peptide files from your species set. You have the possibility to do multiple sequence alignment with MAFFT within Orthofinder, or you could use the files in "Orthogroup_Sequences" and align them with MAFFT afterwards.     
 
 NB: Note that this workflow may be sensitive to gene sequences that are not complete or weirdly formatted (e.g., they are lacking start codons, contain internal stop codons or are not in frame). It can be a good idea to do a sanity check first, especially with some new non-model genomes. 
 
