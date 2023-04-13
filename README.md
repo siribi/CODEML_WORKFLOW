@@ -1,4 +1,4 @@
-# ALIGNMENT GENERATION & BRANCH-SITE TEST WORKFLOW
+# WORKFLOW FOR GENERATING GENE ALIGNMENTS & RUNNING THE BRANCH-SITE TEST 
 This repository contains scripts for generating single copy alignments from orthogroups, and running the branch-site test in codeml. 
 The scripts were made for study systems that have very few single-copy orthogroups (not uncommon in plants). To generate enough single-copy alignments,  orthogroups that contain multiple gene copies/transcripts per species are divided into subsets based on smallest genetic distance (an approximation). 
 
@@ -108,20 +108,20 @@ I have chosen to remove the entire alignment if one of the sequences fall below 
 1. Copy new fasta files from single_copy_orthofasta to new directory. Divide into directories (50 files in each). Run make_50_directories.sh or execute this command: 
 
 ```
-	i=0; 
-	for f in *; 
-	do 
-    		d=dir.$(printf %1d $((i/50+1))); 
-    		mkdir -p $d; 
-    		mv "$f" $d; 
-    		let i++; 
-	done
+i=0; 
+for f in *; 
+do 
+d=dir.$(printf %1d $((i/50+1))); 
+mkdir -p $d; 
+mv "$f" $d; 
+let i++; 
+done
 ```
 
 2. Make the output directories
 
 ```
-	mkdir FASTAS_Guidance_Edits MSA_Scores_Guidance Seq_Scores_Guidance
+mkdir FASTAS_Guidance_Edits MSA_Scores_Guidance Seq_Scores_Guidance
 ```
 
 3. Run worker_guidance_fi.sbatch
