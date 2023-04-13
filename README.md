@@ -122,19 +122,18 @@ mkdir FASTAS_Guidance_Edits MSA_Scores_Guidance Seq_Scores_Guidance
 ```
 
 3. Run worker_guidance_fi.sbatch
-- Note i: This run requires a lot of space. Consider running it in the work directory.  <br />
-- Note ii: Notice that the main output of GUIDANCE2 is renamed: 
+- This run requires a lot of space and also takes a lot of computing hours <br />
+- Notice that the main output of GUIDANCE2 is renamed: 
 ```
 mv MSA.PRANK.Without_low_SP_Col.With_Names $FILEBASE.guidance.edit.fasta
 ```
-- Note iii: See note about bug in GUIDANCE2 above <br />
 
 #################################################################################### <br />
 **Part 1d. Removing alignments with bad sequence scores**
 
 Run detect_lower.py in the Seq_Scores_Guidance, to get a list (badseqscores.txt) of alignments containing sequences with scores less than 0.6. 
 
-Remember to load the right python module: 
+Remember to load the right python module. Here are examples of python2 modules that I have used on two different clusters (named Abel and Saga). 
 ```
 module load python2/2.7.10.gnu (Abel) 
 module load Python/2.7.15-fosscuda-2018b (Saga)
