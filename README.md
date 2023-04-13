@@ -1,4 +1,4 @@
-# ALIGNMENT GENERATION & CODEML PIPELINE
+# ALIGNMENT GENERATION & BRANCH-SITE TEST WORKFLOW
 This repository contains scripts for generating single copy alignments from orthogroups, and running the branch-site test in codeml. 
 The scripts were made for study systems that have very few single-copy orthogroups (not uncommon in plants). To generate enough single-copy alignments,  orthogroups that contain multiple gene copies/transcripts per species are divided into subsets based on smallest genetic distance (an approximation). 
 
@@ -14,6 +14,7 @@ The scripts are written in bash, python and R for a slurm based computing cluste
 
 I use the following programs for making gene alignments: <br />
 ORTHOFINDER <br />
+MAFFT <br />
 EMBOSS (distmat algorithm) <br />
 GUIDANCE2  <br />
 PRANK <br />
@@ -30,8 +31,9 @@ with the MSA_parser.pm found in the GUIDANCE2_bugfix directory. There is no need
 
 To make alignments with this set up, you first need to: 
 1) have a set of cds and peptide files for the species you work with, and 
-2) run OrthoFinder with the peptide files from your species set. Remember to include the multiple sequence alignment option (https://github.com/davidemms/OrthoFinder).    
-NB: Note that GUIDANCE2, codeml and RELAX may be sensitive to gene sequences that are not complete or weirdly formatted (e.g., they are lacking start codons, contain internal stop codons etc). This is an issue that may apply to some non-model genomes. 
+2) run OrthoFinder with the peptide files from your species set (https://github.com/davidemms/OrthoFinder). You have the possibility to do multiple sequence alignment with MAFFT within Orthofinder, or you could use the files in "Orthogroup_Sequences" and align them with MAFFT afterwards.     
+
+NB: Note that this workflow may be sensitive to gene sequences that are not complete or weirdly formatted (e.g., they are lacking start codons, contain internal stop codons or are not in frame). It can be a good idea to do a sanity check first, especially with some new non-model genomes. 
 
 Formatting of fastas: <br />
 It can be smart to add a species abbreviation to all fasta entries, so that they can be searched and filtered on the basis of this name.
