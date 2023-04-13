@@ -1,4 +1,4 @@
-# WORKFLOW FOR GENERATING GENE ALIGNMENTS & RUNNING THE BRANCH-SITE TEST 
+# WORKFLOW FOR GENERATING GENE ALIGNMENTS & RUNNING THE BRANCH-SITE TEST IN CODEML 
 This repository contains scripts for generating single copy alignments from orthogroups, and running the branch-site test in codeml. 
 The scripts were made for study systems that have very few single-copy orthogroups (not uncommon in plants). To generate enough single-copy alignments,  orthogroups that contain multiple gene copies/transcripts per species are divided into subsets based on smallest genetic distance (an approximation). 
 
