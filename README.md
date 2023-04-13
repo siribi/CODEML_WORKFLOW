@@ -49,13 +49,11 @@ SCRIPTS = path to the directory with the relevant scripts <br />
 
 Introduction: First part of the pipeline involves calculating protein distance between all genes in an orthogroup using the distmat algorithm 
 in EMBOSS. To do this we need to prepare the input files using the scripts: The main script called "distmat_prep.sbatch" which needs 
-the two accessory scripts: sort_gene_of_interest_v8.py and make_directories.sh
+the three accessory scripts: 1) if_else_mafft.sh (optional), 2) sort_gene_of_interest_v8.py, and 3) make_directories.sh
 
 BEFORE starting ditstmat_prep.sbatch
-1. Copy all alignments from the MultipleSequenceAlignments in the OrthoFinder results directory to a directory called e.g. orthofasta in the PARENT directory
-2. Concatenate all the cds files so that we can search them for nucleotide sequences.
-	cat *.cds > CladeB_Draba_concat.cds 
-3. Change A) "path" and B) "pattern" in sort_gene_of_interest_v8.py (explanation in the file)
+1. Either i) copy all alignments from the MultipleSequenceAlignments directory in the OrthoFinder to a directory called "orthofasta" in the PARENT directory, or copy unaligned sequences from "Orthogroup_Sequences" to a directory called "orthofasta". If you already have aligned sequences you can hashtag out the run of if_else_mafft.sh (protein alignment) in distmat_prep.sbatch.
+2. Change A) "path" and B) "pattern" in sort_gene_of_interest_v8.py (explanation of "path" nad "pattern" in the file)
 	This script starts the process of dividing the orthogroup fastas into 
 	orthogroup subsets - ultimately resulting in alignments with just one gene copy 
 	per species. The process is slightly complicated (and just an approximation), 
@@ -84,9 +82,17 @@ NB: distmat_prep.sbatch will divide all *sorted.aligned files into directories w
 
 Based on the results from the distmat algorithm from EMBOSS, next step is to build new files with only one gene copy for each species. The "make_files_for_guidance.sbatch" will run several helper scripts to process the output from distmat. Importantly it will pick out one gene copy per species based on the smalles genetic distance to the gene copies from the species of interest. Finally, it will assemble new single copy orthogroup fasta with all nucleotide sequences instead of protein sequences.
 
-1. In  the "make_files_for_guidance.sbatch" script, change directory paths A) "PARENT" B) "SCRIPTS" and C) "DISTMAT". 
-2. Edit the the grep_and_transpose_*.sh script to fit your dataset. This is the file that pick out one gene per species, so make sure all  your species are there. 
-3. In GUIDANCE_prep.py Change A) "path", B) "paths", C) "fdna" and D) "pahti" (fnda is the concatenated cds file). This script assembles the nucleotide fasta files. 
+1. Concatenate all the cds files so that we can search them for nucleotide sequences (we want codon alignments), e.g.
+
+```
+cat *.cds > CladeB_Draba_concat.cds
+```
+
+2. In  the "make_files_for_guidance.sbatch" script, change directory paths A) "PARENT" B) "SCRIPTS" and C) "DISTMAT". 
+
+3. Edit the the grep_and_transpose_*.sh script to fit your dataset. This is the file that pick out one gene per species, so make sure all  your species    are there. 
+
+4. In GUIDANCE_prep.py Change A) "path", B) "paths", C) "fdna" and D) "pahti" (fnda is the concatenated cds file). This script assembles the nucleotide fasta files. 
 
 #################################################################################### <br />
 **Part 1c. Run Guidance** <br />
