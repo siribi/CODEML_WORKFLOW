@@ -75,7 +75,9 @@ NB: distmat_prep.sbatch will divide all *sorted.aligned files into directories w
 4. After the distmat_prep.sbatch is finished, we are ready to do an array run of distmat! distance_worker.sbatch is copied to the relevant directory.
 	Change $DISTMAT_OUT in the worker script called "distance_worker.sbatch" (i.e. the distmat directory)
 	submit an array run of "distance_worker.sbatch" (Differs from system to system, so you might have to figure out how these work on your cluster. Some need both a submit and worker script, while some only use a worker script. On my current cluster I use the following command for e.g. 118 dir.*: 
-	sbatch --array=1-118 distance_worker.sbatch 
+```
+sbatch --array=1-118 distance_worker.sbatch 
+```
 
 #################################################################################### <br />
 **Part 1b. Make files for GUIDANCE2**
@@ -102,6 +104,7 @@ I have chosen to remove the entire alignment if one of the sequences fall below 
 
 1. Copy new fasta files from single_copy_orthofasta to new directory. Divide into directories (50 files in each). Run make_50_directories.sh or execute this command: 
 
+```
 	i=0; 
 	for f in *; 
 	do 
@@ -110,9 +113,13 @@ I have chosen to remove the entire alignment if one of the sequences fall below 
     		mv "$f" $d; 
     		let i++; 
 	done
+```
 
-2. Make the output directories 
+2. Make the output directories
+
+```
 	mkdir FASTAS_Guidance_Edits MSA_Scores_Guidance Seq_Scores_Guidance
+```
 
 3. Run worker_guidance_fi.sbatch
 	Note 1: This run requires a lot of space. Consider running it in the work directory. 
@@ -123,23 +130,37 @@ I have chosen to remove the entire alignment if one of the sequences fall below 
 **Part 1d. Removing alignments with bad sequence scores**
 
 Run detect_lower.py in the Seq_Scores_Guidance, to get a list (badseqscores.txt) of alignments containing sequences with scores less than 0.6. 
+
 Remember to load the right python module: 
-	module load python2/2.7.10.gnu (Abel) 
-	module load Python/2.7.15-fosscuda-2018b (Saga)
+```
+module load python2/2.7.10.gnu (Abel) 
+module load Python/2.7.15-fosscuda-2018b (Saga)
+```
+
 adding file extentions to badseqscores.txt
-	sed -i 's/$/\.guidance.edit.fasta/' ./badseqscores.txt 
+```
+sed -i 's/$/\.guidance.edit.fasta/' ./badseqscores.txt 
+```
+
 In directory with FASTAS_Guidance_Edits, move list of bad seq scores to new directory
-	cat badseqscores.txt | xargs mv -t badseqscores/
+```
+cat badseqscores.txt | xargs mv -t badseqscores/
+```
 
 If needed, remove alignments containing gaps and internal stop codons (this should actually be done beforehand though...)
 Here I made a list of sequences in Arabis alpina and Cardamine hirsuta that contained Ns (and also one for internal STOP codons)
 Use this file for the next steps (Remember to remove e.g. > with  sed -i 's/>//g')
 Grepping for files with gaps and stop-codons and feeding them into a file:
-	grep -f Aalp_sequences_with_gaps_EDIT2.file *.fasta >> Guidance_edit_files_with_Aalp.file
+```
+grep -f Aalp_sequences_with_gaps_EDIT2.file *.fasta >> Guidance_edit_files_with_Aalp.file
+```
 Delete everything after : in Guidance_edit_files_with_Aalp.file
-	sed 's/:.*//g' Guidance_edit_files_with_Aalp.file >> List_of_files_with_Aalp_gaps.file
-	cat List_of_files_with_Aalp_gaps.file | xargs mv -t Aalp_GAPS/
-
+```
+sed 's/:.*//g' Guidance_edit_files_with_Aalp.file >> List_of_files_with_Aalp_gaps.file
+```
+```
+cat List_of_files_with_Aalp_gaps.file | xargs mv -t Aalp_GAPS/
+```
 
 
 # PART 2. RUNNING THE BRANCH-SITE TEST IN CODEML
@@ -147,8 +168,10 @@ Delete everything after : in Guidance_edit_files_with_Aalp.file
 **Part 2a. Preparing to run codeml**
 
 In directory where you want to run Codeml, copy over FASTAS_Guidance_Edits and the scripts directory of interest
-All the scripts directories should be ok now, but if needed it's easy to transform codeml_prep.sbatch for Cochlearia with a series of sed -i 's///g' commands!
-e.g. sed -i 's/Bulk_run_Draba.tree/Bulk_run_Cochlearia.tree/g' codeml_prep_Cochlearia.sbatch
+All the scripts directories should be ok now, but if needed it's easy to transform codeml_prep.sbatch for Cochlearia with a series of sed -i 's///g' commands! e.g. 
+```
+sed -i 's/Bulk_run_Draba.tree/Bulk_run_Cochlearia.tree/g' codeml_prep_Cochlearia.sbatch
+```
 Remember to change PARENT and SCRIPTS directories in codeml_prep.sbatch
 The script codeml_prep.sbatch makes all necessary files and directories to run all models of CODEML.
 To run the controls, you only need to change the tree file :)  
