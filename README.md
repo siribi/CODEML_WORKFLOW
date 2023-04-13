@@ -25,7 +25,10 @@ NOTE ON GUIDANCE2:
 - I have experienced problems with the MSA_parser.pm in GUIDANCE2 and contacted the developers regarding this. 
 They sent me a new version, but I don't think it is implemented in the program (I had the exact same problem when I downloaded it years later). 
 With the new MSA_parser.pm, the final alignment file is called: MSA.PRANK.aln.Sorted.With_Names. 
-You can replace the file /cluster/home/siribi/nobackup/programs/guidance.v2.02/www/Guidance/../bioSequence_scripts_and_constants//MSA_parser.pm 
+You can replace the file 
+```
+/cluster/home/siribi/nobackup/programs/guidance.v2.02/www/Guidance/../bioSequence_scripts_and_constants/MSA_parser.pm 
+```
 with the MSA_parser.pm found in the GUIDANCE2_bugfix directory. There is no need for new compilation/installation. <br />
 - GUIDANCE2 sometimes errors out on predicted genes from genome cds, so I have run such files through Transdecoder first.
 
