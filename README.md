@@ -14,10 +14,10 @@ The scripts are written in bash, python and R for a slurm based computing cluste
 
 I use the following programs for making gene alignments: <br />
 [ORTHOFINDER](https://github.com/davidemms/OrthoFinder) <br />
-MAFFT <br />
-EMBOSS (distmat algorithm) <br />
-GUIDANCE2  <br />
-PRANK <br />
+[MAFFT](https://mafft.cbrc.jp/alignment/software/) <br />
+[EMBOSS](https://emboss.sourceforge.net/download/#Gettingstarted) (distmat algorithm) <br />
+[GUIDANCE2](https://github.com/anzaika/guidance)  <br />
+[PRANK](http://wasabiapp.org/software/prank/) <br />
 You will also need Python 2 (I have not updated the scripts to newer Python versions)
 
 NOTE ON GUIDANCE2: 
