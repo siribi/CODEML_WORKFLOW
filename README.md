@@ -48,33 +48,41 @@ SCRIPTS = path to the directory with the relevant scripts <br />
 **Part 1a. Preparation of input files and running the distmat algorithm in EMBOSS** 
 
 Introduction: First part of the pipeline involves calculating protein distance between all genes in an orthogroup using the distmat algorithm 
-in EMBOSS. To do this we need to prepare the input files using the scripts: The main script called "distmat_prep.sbatch" which needs 
-the three accessory scripts: 1) if_else_mafft.sh (optional), 2) sort_gene_of_interest_v8.py, and 3) make_directories.sh
+in EMBOSS. To do this we need to prepare the input files using the scripts: The main script called [distmat_prep.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distmat_prep.sbatch) which needs 
+the four accessory scripts: 1) [if_else_mafft.sh](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/if_else_mafft.sh) (optional), 2) [sort_gene_of_interest_v8.py](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/sort_gene_of_interest_v8.py), 3) [make_100files_directories.sh](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/make_100files_directories.sh) and 4) [distance_worker.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distance_worker.sbatch) 
 
-BEFORE starting ditstmat_prep.sbatch
-1. Either i) copy unaligned sequences from "Orthogroup_Sequences" to a directory called "orthofasta" for alignment with MAFFT, or ii) copy all alignments from the MultipleSequenceAlignments directory in OrthoFinder to a directory called "orthofasta" in the PARENT directory. If you already have aligned sequences you can hashtag out the run of if_else_mafft.sh (protein alignment) in distmat_prep.sbatch.
-2. Change A) "path" and B) "pattern" in sort_gene_of_interest_v8.py (explanation of "path" nad "pattern" in the file)
-	This script starts the process of dividing the orthogroup fastas into 
+BEFORE starting [distmat_prep.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distmat_prep.sbatch)
+1. Either 
+	i) copy unaligned sequences from **Orthogroup_Sequences/** to a directory called **orthofasta/** for alignment with MAFFT (should end with .fa), or 
+	ii) copy all alignments from the MultipleSequenceAlignments directory in OrthoFinder to a directory called **orthofasta/** in the PARENT 		directory (should end with .aligned.fa) . 
+	If you already have aligned sequences you can hashtag out the run of [if_else_mafft.sh](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/if_else_mafft.sh) (protein alignment) in [distmat_prep.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distmat_prep.sbatch). 
+3. Change A) "path" and B) "pattern" in [sort_gene_of_interest_v8.py](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/sort_gene_of_interest_v8.py) 
+	**path = path to orthofasta/ (containing the .aligned.fa you will get after running mafft) **
+	**pattern = Species abbreviation to search for. Protein distances will be calculated in relation to this species (see below)**
+	**Info about this script:** This script starts the process of dividing the orthogroup fastas into 
 	orthogroup subsets - ultimately resulting in alignments with just one gene copy 
 	per species. The process is slightly complicated (and just an approximation), 
-	but it starts with defining a species of interest in our dataset (here 
-	"Poptre" for Populus tremula) and then dividing each orthogroup into subsets 
+	but it starts with defining a species of interest in our dataset (for instance 
+	"Draniv" for Draba nivalis) and then dividing each orthogroup into subsets 
 	based on the gene copies of that species. For instance, the script will make 
-	three orthogroup subsets called OG0000334_Poptre_001.fasta 
-	OG0000334_Poptre_002.fasta and OG0000334_Poptre_003.fasta if there are three 
-	gene copies from "Poptre" in orthogroup OG0000334. To find which gene copies 
+	three orthogroup subsets called OG0000334_Draniv_000.fasta 
+	OG0000334_Draniv_001.fasta and OG0000334_Draniv_002.fasta if there are three 
+	gene copies from "Draniv" in orthogroup OG0000334. To find which gene copies 
 	from the other species that have the smallest genetic distance to each of these 
 	gene copies, we place each gene copy together with the rest of the orthogroup 
 	sequences and calculate protein distance. (Note that the species of interest 
 	is always put last in the file to make file processing easier downstream).
-3. Change A) $PARENT and B) $SCRIPTS in distmat_prep.sbatch 
-4. Submit distmat_prep.sbatch
+3. Change A) **$PARENT** and B) **$SCRIPTS** in [distmat_prep.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distmat_prep.sbatch) 
+4. Submit [distmat_prep.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distmat_prep.sbatch) 
 
 NB: distmat_prep.sbatch will divide all *sorted.aligned files into directories with 100 in each using "make_directories.sh". However, it differs from system to system how you should number these directories. The script gives each directory the name dir.1, dir.2, dir.3 etc., but some systems only reads dir.001, dir.002, dir.003)
 
-4. After the distmat_prep.sbatch is finished, we are ready to do an array run of distmat! distance_worker.sbatch is copied to the relevant directory.
-	Change $DISTMAT_OUT in the worker script called "distance_worker.sbatch" (i.e. the distmat directory)
-	submit an array run of "distance_worker.sbatch" (Differs from system to system, so you might have to figure out how these work on your cluster. Some need both a submit and worker script, while some only use a worker script. On my current cluster I use the following command for e.g. 118 dir.*: 
+After [distmat_prep.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distmat_prep.sbatch) is finished: <br />
+Now we should be ready to do an array run of distmat with this script: [distance_worker.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distance_worker.sbatch), which should have been copied to **/PARENT/orthofasta/sorted_aligned/**. <br />
+
+1. Change **$DISTMAT_OUT** in [distance_worker.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distance_worker.sbatch). This will be the main output directory for the array run. It should already have been made by the previous script [distmat_prep.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distmat_prep.sbatch) <br />
+
+2. Submit an array run of [distance_worker.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distance_worker.sbatch) (Differs from system to system, so you might have to figure out how these work on your cluster. Some need both a submit and worker script, while some only use a worker script. On my current cluster I use the following command for e.g. 118 dir.*: 
 ```
 sbatch --array=1-118 distance_worker.sbatch 
 ```
