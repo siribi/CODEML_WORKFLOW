@@ -80,7 +80,7 @@ BEFORE starting [distmat_prep.sbatch](https://github.com/siribi/CODEML_WORKFLOW/
 NB: distmat_prep.sbatch will divide all *sorted.aligned files into directories with 100 in each using "make_100files_directories.sh". However, it differs from system to system how you should number these directories. The script gives each directory the name dir.1, dir.2, dir.3 etc., but some systems only reads dir.001, dir.002, dir.003)
 
 After [distmat_prep.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distmat_prep.sbatch) is finished: <br />
-Now we should be ready to do an array run of distmat with this script: [distance_worker.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distance_worker.sbatch), which should have been copied to **/PARENT/orthofasta/sorted_aligned/**. <br />
+Now we should be ready to do an array run of distmat with this script: [distance_worker.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distance_worker.sbatch), which should have been copied to **$PARENT/orthofasta/sorted_aligned/**. <br />
 
 1. Change **$DISTMAT_OUT** in [distance_worker.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distance_worker.sbatch). This will be the main output directory for the array run. It should already have been made by the previous script [distmat_prep.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distmat_prep.sbatch) <br />
 
