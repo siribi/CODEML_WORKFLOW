@@ -52,14 +52,11 @@ in EMBOSS. To do this we need to prepare the input files using the scripts: The 
 the four accessory scripts: 1) [if_else_mafft.sh](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/if_else_mafft.sh) (optional), 2) [sort_gene_of_interest_v8.py](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/sort_gene_of_interest_v8.py), 3) [make_100files_directories.sh](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/make_100files_directories.sh) and 4) [distance_worker.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distance_worker.sbatch) 
 
 BEFORE starting [distmat_prep.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distmat_prep.sbatch)
-1. Either 
-	i) copy unaligned sequences from **OrthoFinder/Results_XXXXX/Orthogroup_Sequences/** to a directory called **orthofasta/** for alignment with MAFFT (should end with .fa), or 
-	ii) copy all alignments from the **OrthoFinder/Results_XXXXX/MultipleSequenceAlignments/** directory in OrthoFinder to a directory called 		**orthofasta/** in the PARENT directory (should end with .aligned.fa) . 
-	If you already have aligned sequences you can hashtag out the run of [if_else_mafft.sh](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/if_else_mafft.sh) (protein alignment) in [distmat_prep.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distmat_prep.sbatch). <br />
+1. Either i) copy unaligned sequences from **OrthoFinder/Results_XXXXX/Orthogroup_Sequences/** to a directory called **orthofasta/** for alignment with MAFFT (should end with .fa), or ii) copy all alignments from the **OrthoFinder/Results_XXXXX/MultipleSequenceAlignments/** directory in OrthoFinder to a directory called **orthofasta/** in the PARENT directory (should end with .aligned.fa). If you already have aligned sequences you can hashtag out the run of [if_else_mafft.sh](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/if_else_mafft.sh) (protein alignment) in [distmat_prep.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distmat_prep.sbatch). <br />
 
-2. Change A) "path" and B) "pattern" in [sort_gene_of_interest_v8.py](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/sort_gene_of_interest_v8.py) 
-	**path = path to orthofasta/ (containing the .aligned.fa you will get after running mafft) **
-	**pattern = Species abbreviation to search for. Protein distances will be calculated in relation to this species (see below)**
+2. Change A) "path" and B) "pattern" in [sort_gene_of_interest_v8.py](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/sort_gene_of_interest_v8.py) <br />
+	**path = path to orthofasta/ (containing the .aligned.fa you will get after running mafft) ** <br />
+	**pattern = Species abbreviation to search for. Protein distances will be calculated in relation to this species (see below)** <br />
 	**Info about this script:** This script starts the process of dividing the orthogroup fastas into 
 	orthogroup subsets - ultimately resulting in alignments with just one gene copy 
 	per species. The process is slightly complicated (and just an approximation), 
