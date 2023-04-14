@@ -1,7 +1,7 @@
 #!/bin/bash
 # Project:EVOTREE
 ## Run like this: sbatch --array=1-87 distance_worker.sbatch  
-#SBATCH --account=nn8023k
+#SBATCH --account=XXXXXXX
 # Wall clock limit:
 #SBATCH --time=48:00:00
 #SBATCH --ntasks=1
