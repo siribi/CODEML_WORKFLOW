@@ -53,10 +53,11 @@ the four accessory scripts: 1) [if_else_mafft.sh](https://github.com/siribi/CODE
 
 BEFORE starting [distmat_prep.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distmat_prep.sbatch)
 1. Either 
-	i) copy unaligned sequences from **Orthogroup_Sequences/** to a directory called **orthofasta/** for alignment with MAFFT (should end with .fa), or 
-	ii) copy all alignments from the MultipleSequenceAlignments directory in OrthoFinder to a directory called **orthofasta/** in the PARENT 		directory (should end with .aligned.fa) . 
-	If you already have aligned sequences you can hashtag out the run of [if_else_mafft.sh](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/if_else_mafft.sh) (protein alignment) in [distmat_prep.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distmat_prep.sbatch). 
-3. Change A) "path" and B) "pattern" in [sort_gene_of_interest_v8.py](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/sort_gene_of_interest_v8.py) 
+	i) copy unaligned sequences from **OrthoFinder/Results_XXXXX/Orthogroup_Sequences/** to a directory called **orthofasta/** for alignment with MAFFT (should end with .fa), or 
+	ii) copy all alignments from the **OrthoFinder/Results_XXXXX/MultipleSequenceAlignments/** directory in OrthoFinder to a directory called 		**orthofasta/** in the PARENT directory (should end with .aligned.fa) . 
+	If you already have aligned sequences you can hashtag out the run of [if_else_mafft.sh](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/if_else_mafft.sh) (protein alignment) in [distmat_prep.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distmat_prep.sbatch). <br />
+
+2. Change A) "path" and B) "pattern" in [sort_gene_of_interest_v8.py](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/sort_gene_of_interest_v8.py) 
 	**path = path to orthofasta/ (containing the .aligned.fa you will get after running mafft) **
 	**pattern = Species abbreviation to search for. Protein distances will be calculated in relation to this species (see below)**
 	**Info about this script:** This script starts the process of dividing the orthogroup fastas into 
@@ -72,7 +73,9 @@ BEFORE starting [distmat_prep.sbatch](https://github.com/siribi/CODEML_WORKFLOW/
 	gene copies, we place each gene copy together with the rest of the orthogroup 
 	sequences and calculate protein distance. (Note that the species of interest 
 	is always put last in the file to make file processing easier downstream).
+
 3. Change A) **$PARENT** and B) **$SCRIPTS** in [distmat_prep.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distmat_prep.sbatch) 
+
 4. Submit [distmat_prep.sbatch](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/distmat_prep.sbatch) 
 
 NB: distmat_prep.sbatch will divide all *sorted.aligned files into directories with 100 in each using "make_directories.sh". However, it differs from system to system how you should number these directories. The script gives each directory the name dir.1, dir.2, dir.3 etc., but some systems only reads dir.001, dir.002, dir.003)
