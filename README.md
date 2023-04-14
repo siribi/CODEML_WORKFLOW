@@ -56,10 +56,10 @@ BEFORE starting [distmat_prep.sbatch](https://github.com/siribi/CODEML_WORKFLOW/
 
 2. Change A) "path" and B) "pattern" in [sort_gene_of_interest_v8.py](https://github.com/siribi/CODEML_WORKFLOW/blob/main/scripts/alignments/sort_gene_of_interest_v8.py) <br />
 
-	**path = path to orthofasta/ (containing the .aligned.fa you will get after running mafft)** <br />
+	**path = Path to orthofasta/ (containing the .aligned.fa you will get after running mafft)** <br />
 	**pattern = Species abbreviation to search for. Protein distances will be calculated in relation to this species (see below)** <br />
 	
-	**Info about this script:** This script starts the process of dividing the orthogroup fastas into 
+	This script starts the process of dividing the orthogroup fastas into 
 	orthogroup subsets - ultimately resulting in alignments with just one gene copy 
 	per species. The process is slightly complicated (and just an approximation), 
 	but it starts with defining a species of interest in our dataset (for instance 
