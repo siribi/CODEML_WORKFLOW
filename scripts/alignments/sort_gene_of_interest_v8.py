@@ -1,6 +1,6 @@
 """
 
-@author: chocobo&chocobo
+@author: chocobo
 
 """
 
@@ -30,13 +30,13 @@ is always put last in the file to make file processing easier downstream).
 
 ### DEFINE SOME VARIABLES ###
 
-# A: Enter path that contains the .aligned.fasta
+# A: Enter path that contains the .aligned.fa
 
-path = "/cluster/home/siribi/work/EVOTREE/CODEML/alignments/FABALES/orthofasta/"
+path = "/cluster/home/siribi/work/CODEML_WORKFLOW_TEST/orthofasta/"
 
-# B: Define pattern to search for
+# B: Define the species abbreviation to search for. Protein distances will be calculated in relation to this species.
 
-pattern = r'Poptre'
+pattern = r'Prunavi'
 
 
 def get_gene_of_interest(path,fname,pattern):
@@ -198,8 +198,8 @@ def get_gene_of_interest(path,fname,pattern):
 #change directory to path
 os.chdir(path)
 
-#get all .aligned.fasta files
-f = glob.glob("*[0-9].fa")
+#get all .aligned.fa files
+f = glob.glob("*[0-9].aligned.fa")
 
 # loop through all fasta files
 
