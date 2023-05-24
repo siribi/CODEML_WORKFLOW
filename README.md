@@ -21,7 +21,7 @@ CodeML is known to have a steep learning curve, but there are a lot of useful re
 
 **Note on convergence issues:** In this workflow, I run CodeML from four to six times per model with different initial parameter values to overcome convergence problems. The run with the highest likelihood score is used in subsequent analyzes. You can read more about this issue in [Wong et al. 2004](https://academic.oup.com/genetics/article/168/2/1041/6059620?login=true).  <br />
 
-Before you can run the branch-site test in CodeML you need to generate gene alignments and a species tree or gene trees. 
+Before you can run the branch-site test in CodeML you need to generate gene alignments and a species tree or a gene tree for each alignment. 
 
 # PART 1. MAKING ALIGNMENTS FROM ORTHOGROUPS
 #################################################################################### <br />
