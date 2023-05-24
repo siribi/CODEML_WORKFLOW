@@ -5,9 +5,9 @@ The scripts were made for study systems that have very few single-copy orthogrou
 The approach for alignment generation and set-up for the branch-site test (2a in the Figure below) is described in Birkeland et al. 2020, Mol Biol Evol + Supplementary, with some minor changes  
 https://academic.oup.com/mbe/article/37/7/2052/5804990?login=false
 
-![Pipelinechart from Birkeland et al. 2020](https://github.com/siribi/CODEML_HYPHY_PIPELINE/blob/main/images/FigureS2_Pipeline_chart.png)
-
 The scripts are written in bash, python and R for a slurm based computing cluster like this one: https://documentation.sigma2.no/jobs/job_scripts/saga_job_scripts.html
+
+![Pipelinechart from Birkeland et al. 2020](https://github.com/siribi/CODEML_HYPHY_PIPELINE/blob/main/images/FigureS2_Pipeline_chart.png)
 
 **Get to know the branch-site test in CodeML:** <br />
 CodeML is known to have a steep learning curve, but there are a lot of useful resources out there which can help you get a good idea of how the program works: <br />
