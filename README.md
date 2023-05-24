@@ -9,10 +9,10 @@ https://academic.oup.com/mbe/article/37/7/2052/5804990?login=false
 
 The scripts are written in bash, python and R for a slurm based computing cluster like this one: https://documentation.sigma2.no/jobs/job_scripts/saga_job_scripts.html
 
-**Get to know CodeML**
+**Get to know the branch-site test in CodeML:** <br />
 CodeML is known to have a steep learning curve, but there are a lot of useful resources out there which can help you get a good idea of how the program works: <br />
 - Check out the section on CodeML in the [PAML Frequently Asked Questions](http://abacus.gene.ucl.ac.uk/software/pamlFAQs.pdf). Here you can get advice on how many species are required, divergence levels etc. <br />
-- [This tutorial](https://github.com/romainstuder/evosite3d/blob/update_tutorials/tutorials/branchsite.md) on CodeML by Romain Studer gives a good and short overview of the basics. I discovered that I had the original tutorial with images in pdf version - you can find it in the [resources folder](https://github.com/siribi/CODEML_WORKFLOW/blob/main/resources/RomainStuder_tutorial_codeml_Evosite3D.pdf). <br />
+- [This tutorial](https://github.com/romainstuder/evosite3d/blob/update_tutorials/tutorials/branchsite.md) on CodeML by Romain Studer gives a good and short overview of the basics of the branch-site test. I discovered that I had the original tutorial with images in pdf version - you can find it in the [resources folder](https://github.com/siribi/CODEML_WORKFLOW/blob/main/resources/RomainStuder_tutorial_codeml_Evosite3D.pdf). <br />
 - Álvarez-Carretero, Paschalia Kapli and Ziheng Yang (the developer of PAML) recently published [A Beginner’s Guide on the Use of PAML to Detect Positive Selection](https://academic.oup.com/mbe/article/40/4/msad041/7140562?login=true) in Molecular Biology and Evolution. <br />
 - Jeffares et al. gives a nice introduction on how to use CodeML to calculate ω and identify positive selection using all genes in a genome. This tutorial also gives a good introduction to the different models of adaptive evolution implemented in CodeML: [A Beginners Guide to Estimating the Non-synonymous to Synonymous Rate Ratio of all Protein-Coding Genes in a Genome](https://www.researchgate.net/publication/268231340_A_Beginners_Guide_to_Estimating_the_Non-synonymous_to_Synonymous_Rate_Ratio_of_all_Protein-Coding_Genes_in_a_Genome) <br />
 - Join the [PAML discussion group](https://groups.google.com/g/pamlsoftware) to ask questions, search for answers and follow discussions on CodeML/PAML <br />
@@ -21,6 +21,7 @@ CodeML is known to have a steep learning curve, but there are a lot of useful re
 
 **Note on convergence issues:** In this workflow, I run CodeML from four to six times per model with different initial parameter values to overcome convergence problems. The run with the highest likelihood score is used in subsequent analyzes. You can read more about this issue in [Wong et al. 2004](https://academic.oup.com/genetics/article/168/2/1041/6059620?login=true).  <br />
 
+Before you can run the branch-site test in CodeML you need to generate gene alignments and a species tree or gene trees. 
 
 # PART 1. MAKING ALIGNMENTS FROM ORTHOGROUPS
 #################################################################################### <br />
