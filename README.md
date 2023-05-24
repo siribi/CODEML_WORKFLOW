@@ -2,8 +2,7 @@
 This repository contains scripts for generating single copy alignments from orthogroups, and running the branch-site test in codeml. 
 The scripts were made for study systems that have very few single-copy orthogroups (not uncommon in plants). To generate enough single-copy alignments,  orthogroups that contain multiple gene copies/transcripts per species are divided into subsets based on smallest genetic distance (an approximation). 
 
-The approach for alignment generation and set-up for the branch-site test (2a in the Figure below) is described in Birkeland et al. 2020, Mol Biol Evol + Supplementary, with some minor changes  
-https://academic.oup.com/mbe/article/37/7/2052/5804990?login=false
+The approach for alignment generation and set-up for the branch-site test (2a in the Figure below) is described in [Birkeland et al. 2020, Mol Biol Evol](https://academic.oup.com/mbe/article/37/7/2052/5804990?login=false) + Supplementary, with some minor changes  
 
 The scripts are written in bash, python and R for a slurm based computing cluster like this one: https://documentation.sigma2.no/jobs/job_scripts/saga_job_scripts.html
 
