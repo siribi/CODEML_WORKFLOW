@@ -196,7 +196,7 @@ cat List_of_files_with_Aalp_gaps.file | xargs mv -t Aalp_GAPS/
 **Part 2a. Preparing to run codeml**
 
 In directory where you want to run Codeml, copy over FASTAS_Guidance_Edits and the scripts directory of interest
-All the scripts directories should be ok now, but if needed it's easy to transform codeml_prep.sbatch for Cochlearia with a series of sed -i 's///g' commands! e.g. 
+All the scripts directories should be ok now, but if needed it's easy to transform codeml_prep.sbatch for Cochlearia with a series of find and replace commands, like sed -i 's///g' commands! e.g. 
 ```
 sed -i 's/Bulk_run_Draba.tree/Bulk_run_Cochlearia.tree/g' codeml_prep_Cochlearia.sbatch
 ```
